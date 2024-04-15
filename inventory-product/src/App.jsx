@@ -5,6 +5,8 @@ import { MyRoutes } from './routes/routes'
 import { createContext, useState } from 'react'
 import { Dark, Light } from './styles/themes'
 import { Device } from './styles/breackpoints'
+import { Sidebar } from './components/organism/sidebar/SideBar'
+import { MenuBurger } from './components/organism/MenuBurger'
 
 export const ThemeContext = createContext()
 
@@ -19,10 +21,10 @@ function App() {
       <ThemeProvider theme={themeStyle}>
         <Container className={sideBarOpen ? "active" : null }>
           <section className='ContentSideBar'>
-            sidebar
+              <Sidebar  state={sideBarOpen} setState={() => setSideBarOpen(!sideBarOpen)}/>
           </section>
           <section className='ContentMenuBurger'>
-            menu hamburgueza
+           <MenuBurger />
           </section>
           <section className='ContentRoutes'>
             <MyRoutes />  
