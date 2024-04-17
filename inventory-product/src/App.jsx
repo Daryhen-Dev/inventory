@@ -1,12 +1,14 @@
 
 import styled, { ThemeProvider } from 'styled-components'
-import { AuthContextProvider } from './context/AuthContext'
+
 import { MyRoutes } from './routes/routes'
 import { createContext, useState } from 'react'
 import { Dark, Light } from './styles/themes'
 import { Device } from './styles/breackpoints'
 import { Sidebar } from './components/organism/sidebar/SideBar'
 import { MenuBurger } from './components/organism/MenuBurger'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { AuthContextProvider } from './context/AuthContext'
 
 export const ThemeContext = createContext()
 
@@ -15,23 +17,28 @@ function App() {
   const [themeUsed, setThemeUsed] = useState('dark')
   const theme = themeUsed === 'light' ? 'light' : 'dark'
   const themeStyle = theme === 'light' ? Light : Dark
-  const [sideBarOpen, setSideBarOpen] = useState(false) 
+  const [sideBarOpen, setSideBarOpen] = useState(false)
   return (
+    <>
     <ThemeContext.Provider value={{ theme, setThemeUsed }}>
       <ThemeProvider theme={themeStyle}>
-        <Container className={sideBarOpen ? "active" : null }>
-          <section className='ContentSideBar'>
-              <Sidebar  state={sideBarOpen} setState={() => setSideBarOpen(!sideBarOpen)}/>
-          </section>
-          <section className='ContentMenuBurger'>
-           <MenuBurger />
-          </section>
-          <section className='ContentRoutes'>
-            <MyRoutes />  
-          </section>
-        </Container>
+        <AuthContextProvider>
+          <Container className={sideBarOpen ? "active" : null}>
+            <section className='ContentSideBar'>
+              <Sidebar state={sideBarOpen} setState={() => setSideBarOpen(!sideBarOpen)} />
+            </section>
+            <section className='ContentMenuBurger'>
+              <MenuBurger />
+            </section>
+            <section className='ContentRoutes'>
+              <MyRoutes />
+            </section>
+          </Container>
+        </AuthContextProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
       </ThemeProvider>
     </ThemeContext.Provider>
+    </>
   )
 }
 const Container = styled.main`

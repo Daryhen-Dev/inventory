@@ -12,10 +12,10 @@ export const MenuBurger = () => {
             <NavBar>
                 <section>
                     <BurgerMenu onClick={() => setClick(!click)}>
-                        <label className={click ? "toggle active" : "toggle"} for="checkbox">
-                            <div class="bars" id="bar1"></div>
-                            <div class="bars" id="bar2"></div>
-                            <div class="bars" id="bar3"></div>
+                        <label className={click ? "toggle active" : "toggle"}>
+                            <div className="bars" id="bar1"></div>
+                            <div className="bars" id="bar2"></div>
+                            <div className="bars" id="bar3"></div>
                         </label>
                     </BurgerMenu>
                 </section>
@@ -113,7 +113,7 @@ top: 1.5rem;
 .bars {
   width: 100%;
   height: 4px;
-  background-color: rgb(176, 92, 255);
+  background-color: ${({theme}) => theme.text};
   border-radius: 4px;
 }
 
@@ -125,21 +125,45 @@ top: 1.5rem;
   width: 70%;
 }
 
-#checkbox:checked + .toggle 
-
-#checkbox:checked + .toggle
-
-#checkbox:checked + .toggle 
-
-
 `
 const Menu = styled.div`
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: center;
     list-style: none;
     z-index: 10;
-
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    background-color: ${(props)=> `rbga(${props.theme.bodyRgba}, 0.85)`};
+    backdrop-filter: blur(3px);
+    transform: ${(props) => props.$click == "true" ? "translateY(0)" : "translateY(1000%)"};
+    transition: all 0.3s ease;
+    .LinkContainer{
+        &:hover {
+            background: ${({theme}) => theme.bgAlpha};
+        }
+        .Links{
+            width: 100vw;
+            display: flex;
+            justify-content:center;
+            align-items:center;
+            text-decoration:none;
+            color: ${({theme}) => theme.text};
+            height: 80px;
+            .Linkicon{
+                padding: ${v.smSpacing} ${v.mdSpacing};
+                display:flex;
+                svg {
+                    font-size: 25px;
+                }
+            }
+        }
+    }
 `;
 const Divider = styled.div`
   height: 1px;
