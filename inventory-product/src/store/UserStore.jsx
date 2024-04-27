@@ -4,10 +4,12 @@ import { InsertUser } from "../supabase/cruduser"
 
 export const useUserStore = create((set, get) => ({
     insertUserAdmin: async (p) => {
+        console.log(p)
         const {data, error} = await supabase.auth.signUp({
             email: p.email,
             password: p.pass,
           })
+          console.log(error)
           if (error) return
           const dataUser = 
           await InsertUser(

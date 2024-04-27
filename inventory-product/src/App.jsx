@@ -9,6 +9,8 @@ import { Sidebar } from './components/organism/sidebar/SideBar'
 import { MenuBurger } from './components/organism/MenuBurger'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { AuthContextProvider } from './context/AuthContext'
+import { useLocation } from 'react-router-dom'
+import { Login } from './pages/Login'
 
 export const ThemeContext = createContext()
 
@@ -18,22 +20,32 @@ function App() {
   const theme = themeUsed === 'light' ? 'light' : 'dark'
   const themeStyle = theme === 'light' ? Light : Dark
   const [sideBarOpen, setSideBarOpen] = useState(false)
+  const { pathname } = useLocation()
+
   return (
     <>
     <ThemeContext.Provider value={{ theme, setThemeUsed }}>
       <ThemeProvider theme={themeStyle}>
         <AuthContextProvider>
-          <Container className={sideBarOpen ? "active" : null}>
-            <section className='ContentSideBar'>
-              <Sidebar state={sideBarOpen} setState={() => setSideBarOpen(!sideBarOpen)} />
-            </section>
-            <section className='ContentMenuBurger'>
-              <MenuBurger />
-            </section>
-            <section className='ContentRoutes'>
-              <MyRoutes />
-            </section>
-          </Container>
+          {
+            pathname == "/login" ? (
+               <Login />
+            ) : (
+              <Container className={sideBarOpen ? "active" : null}>
+              <section className='ContentSideBar'>
+                <Sidebar state={sideBarOpen} setState={() => setSideBarOpen(!sideBarOpen)} />
+              </section>
+              <section className='ContentMenuBurger'>
+                <MenuBurger />
+              </section>
+              <section className='ContentRoutes'>
+                <MyRoutes />
+              </section>
+            </Container>
+
+            )
+          }
+
         </AuthContextProvider>
         <ReactQueryDevtools initialIsOpen={false} />
       </ThemeProvider>
